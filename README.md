@@ -33,6 +33,7 @@ Cependant, si vous voulez compiler vous-même le projet :
 - Si vous êtes sous VSCode, le fichier `tasks.json` est déjà configuré pour compiler automatiquement.
 
 ➡️ Une fois que le simulateur est compilé, il suffit d'exécuter **le fichier `interface.py`** pour pouvoir tout gérér !
+Par exemple, appuyez sur choisir ROM, choisissez le fichier snake.asb dans le dossier roms/, appuyez sur compiler la rom, puis sur exécuter, et vous pourrez jouer à Snake !
 
 ---
 
