@@ -1,0 +1,13 @@
+INPUT A:8 B:8
+C0 = CONST 0
+
+FOR i IN 0 TO 7:
+    S{i}_X   = XOR A[{i}] B[{i}]
+    S{i}     = XOR S{i}_X C{i}
+    C{i+1}_A = AND A[{i}] B[{i}]
+    C{i+1}_B = AND S{i}_X C{i}
+    C{i+1}   = OR C{i+1}_A C{i+1}_B
+END
+
+SUM = CONCAT S7 S6 S5 S4 S3 S2 S1 S0
+OUTPUT SUM

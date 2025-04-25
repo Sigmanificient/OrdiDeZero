@@ -1,0 +1,14 @@
+INPUT A:16 B:16
+C0 = CONST 1  # carry-in pour faire +1 → soustraction
+
+FOR i IN 0 TO 15:
+    B{i}_N  = NOT B[{i}]
+    S{i}_X  = XOR A[{i}] B{i}_N
+    S{i}    = XOR S{i}_X C{i}
+    C{i+1}_A = AND A[{i}] B{i}_N
+    C{i+1}_B = AND S{i}_X C{i}
+    C{i+1}   = OR C{i+1}_A C{i+1}_B
+END
+
+RESULT = CONCAT S15 S14 S13 S12 S11 S10 S9 S8 S7 S6 S5 S4 S3 S2 S1 S0
+OUTPUT RESULT

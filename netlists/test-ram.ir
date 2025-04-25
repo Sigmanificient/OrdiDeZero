@@ -1,0 +1,8 @@
+# INPUTS: 0
+# OUTPUTS: 4
+# SIGNALS: 5
+GateIR(id=0, type='CONST', output=1, input1=0, input2=0, input3=0, size=16, enabled_if=-1, const_value=0)
+GateIR(id=1, type='LOAD', output=2, input1=1, input2=0, input3=0, size=16, enabled_if=-1, const_value=None)
+GateIR(id=2, type='INDEX', output=3, input1=2, input2=0, input3=0, size=1, enabled_if=-1, const_value=0)
+GateIR(id=3, type='XOR', output=4, input1=0, input2=3, input3=0, size=1, enabled_if=-1, const_value=None)
+GateIR(id=4, type='STORE', output=-1, input1=1, input2=4, input3=0, size=16, enabled_if=-1, const_value=None)

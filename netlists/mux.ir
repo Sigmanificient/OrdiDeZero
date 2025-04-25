@@ -1,0 +1,4 @@
+# INPUTS: 0, 1, 2
+# OUTPUTS: 3
+# SIGNALS: 4
+GateIR(id=0, type='MUX', output=3, input1=0, input2=1, input3=2, size=1, const_value=None)

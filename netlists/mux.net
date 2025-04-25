@@ -1,0 +1,5 @@
+INPUT A B C
+
+REP = MUX A B C
+
+OUTPUT REP

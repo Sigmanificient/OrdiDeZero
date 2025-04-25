@@ -1,0 +1,7 @@
+INPUT A:8 B:8
+
+FOR i IN 0 TO 7:
+    X{i} = XOR A[{i}] B[{i}]
+END
+
+OUTPUT X0 X1 X2 X3 X4 X5 X6 X7

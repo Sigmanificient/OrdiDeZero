@@ -1,0 +1,17 @@
+INPUT A:16 B:16 OP:1
+
+C0 = BUF OP
+NB = NOT B
+
+GOODB = MUX C0 B NB
+
+FOR i IN 0 TO 15:
+    S{i}_X  = XOR A[{i}] GOODB[{i}]
+    S{i}    = XOR S{i}_X C{i}
+    C{i+1}_A = AND A[{i}] GOODB[{i}]
+    C{i+1}_B = AND S{i}_X C{i}
+    C{i+1}   = OR C{i+1}_A C{i+1}_B
+END
+
+RESULT = CONCAT S15 S14 S13 S12 S11 S10 S9 S8 S7 S6 S5 S4 S3 S2 S1 S0
+OUTPUT RESULT

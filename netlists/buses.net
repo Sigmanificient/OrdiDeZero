@@ -1,0 +1,8 @@
+INPUT A:2 B:3
+
+X = CONCAT A B
+Y = INDEX A 0
+Z = SUB B 1 2
+
+OUTPUT X Y Z
+

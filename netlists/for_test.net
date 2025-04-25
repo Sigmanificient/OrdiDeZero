@@ -1,0 +1,11 @@
+# Test des FOR imbriqués
+
+INPUT A:2 B:2
+
+FOR i IN 0 TO 1:
+    FOR j IN 0 TO 1:
+        P{i}{j} = AND A[{i}] B[{j}]
+    END
+END
+
+OUTPUT P00 P01 P10 P11

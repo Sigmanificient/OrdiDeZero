@@ -1,0 +1,4 @@
+# INPUTS: 0
+# OUTPUTS: 1
+# SIGNALS: 2
+GateIR(id=0, type='ROM', output=1, input1=0, input2=0, input3=0, size=32, enabled_if=-1, const_value=None)

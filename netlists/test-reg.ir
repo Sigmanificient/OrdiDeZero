@@ -1,0 +1,5 @@
+# INPUTS: 0
+# OUTPUTS: 1
+# SIGNALS: 3
+GateIR(id=0, type='BUF', output=2, input1=1, input2=0, input3=0, size=1, enabled_if=-1, const_value=None)
+GateIR(id=1, type='XOR', output=1, input1=0, input2=2, input3=0, size=1, enabled_if=-1, const_value=None)

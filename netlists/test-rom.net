@@ -1,0 +1,5 @@
+INPUT C:16
+
+REP = ROM C
+
+OUTPUT REP

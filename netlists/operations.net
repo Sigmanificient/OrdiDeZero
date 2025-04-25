@@ -1,0 +1,11 @@
+INPUT A B
+
+AN = AND A B
+O = OR A B
+X = XOR A B
+NA = NAND A B
+NO = NOR A B
+NX = NXOR A B
+N = NOT A
+
+OUTPUT AN O X NA NO NX N

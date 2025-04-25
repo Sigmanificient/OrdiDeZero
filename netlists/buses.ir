@@ -1,0 +1,6 @@
+# INPUTS: 0, 1
+# OUTPUTS: 2, 3, 4
+# SIGNALS: 5
+GateIR(id=0, type='CONCAT', output=2, input1=0, input2=1, input3=0, size=5, const_value=3)
+GateIR(id=1, type='INDEX', output=3, input1=0, input2=0, input3=0, size=1, const_value=0)
+GateIR(id=2, type='SUB', output=4, input1=1, input2=0, input3=0, size=2, const_value=1)

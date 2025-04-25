@@ -1,0 +1,11 @@
+# INPUTS: 0, 1
+# OUTPUTS: 4, 6, 8, 9
+# SIGNALS: 10
+GateIR(id=0, type='INDEX', output=2, input1=0, input2=0, input3=0, size=1, const_value=0)
+GateIR(id=1, type='INDEX', output=3, input1=1, input2=0, input3=0, size=1, const_value=0)
+GateIR(id=2, type='AND', output=4, input1=2, input2=3, input3=0, size=1, const_value=None)
+GateIR(id=3, type='INDEX', output=5, input1=1, input2=0, input3=0, size=1, const_value=1)
+GateIR(id=4, type='AND', output=6, input1=2, input2=5, input3=0, size=1, const_value=None)
+GateIR(id=5, type='INDEX', output=7, input1=0, input2=0, input3=0, size=1, const_value=1)
+GateIR(id=6, type='AND', output=8, input1=7, input2=3, input3=0, size=1, const_value=None)
+GateIR(id=7, type='AND', output=9, input1=7, input2=5, input3=0, size=1, const_value=None)

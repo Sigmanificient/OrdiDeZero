@@ -1,0 +1,282 @@
+r8 = 10 //x
+r9 = 25 //y
+r6 = 0 //direction, 0right 1left 2down 3up
+r7 = 10 //taille*2
+r10 = 0 //indice de la pile
+r12 = 10    //x pome
+r13 = 10    //y pomme
+r14 = 0     //frames passes (pour random)
+//ram[3] c 1 si c un special
+
+label DESSIN_INIT
+r3 = r8
+r4 = r9
+call $DRAW
+r11 = r10 + 10000   //r11 c tt le temps r10 + 10000
+ram[r11] = r8
+r11 = r11 + 1
+ram[r11] = r9
+r10 = r10 + 2
+r8 = r8 + 1
+comp r10 r7
+jumpz $DESSIN_INIT
+r10 = 0
+r3 = r12
+r4 = r13
+r5 = 1
+call $DRAW
+
+label START
+
+r3 = r8
+r4 = r9
+call $CONTACT
+comp r2 1
+jumpe $MORT
+
+r5 = 0
+
+call $DRAW
+
+r14 = r14 + 1
+wait
+wait
+
+r11 = r10 + 10000
+r3 = ram[r11]
+r11 = r11 + 1
+r4 = ram[r11]
+call $ERASE
+
+ram[r11] = r9
+r11 = r11 - 1
+ram[r11] = r8
+r10 = r10 + 2
+comp r10 r7
+jumpz $FRUIT_TEST
+r10 = 0
+
+label FRUIT_TEST
+
+comp r8 r12
+jumpe $FRUIT1
+jump $MOVEMENT
+label FRUIT1
+comp r9 r13
+jumpe $FRUIT2
+jump $MOVEMENT
+label FRUIT2
+r7 = r7 + 2
+r11 = r7 + 10000
+r1 = 65535
+ram[r11] = r1
+r0 = ram[3]
+jumpe $FRUIT6
+r7 = r7 + 2
+r11 = r7 + 10000
+ram[r11] = r1
+r7 = r7 + 2
+r11 = r7 + 10000
+ram[r11] = r1
+label FRUIT6
+r13 = r12 + r14
+r13 = r13 & 31
+r12 = r14 & 63
+comp r12 48
+jumpz $FRUIT3
+r12 = r12 - 48
+label FRUIT3
+r3 = r12
+r4 = r13
+r14 = r14 + 3
+call $CONTACT
+comp r2 1
+jumpe $FRUIT2
+r0 = r14 & 3
+jumpe $FRUIT5
+r0 = 0
+r5 = 1
+ram[3] = r0
+jump $FRUIT4
+label FRUIT5
+r0 = 1
+r5 = 3
+ram[3] = r0
+label FRUIT4
+call $DRAW
+
+
+
+label MOVEMENT
+//ordre dans la ram : up down left right
+r0 = ram[10]
+comp r0 1
+jumpe $MOVE_UP
+r0 = ram[11]
+comp r0 1
+jumpe $MOVE_DOWN
+r0 = ram[12]
+comp r0 1
+jumpe $MOVE_LEFT
+r0 = ram[13]
+comp r0 1
+jumpe $MOVE_RIGHT
+
+comp r6 0
+jumpe $MOVE_RIGHT
+comp r6 1
+jumpe $MOVE_LEFT
+comp r6 2
+jumpe $MOVE_DOWN
+comp r6 3
+jumpe $MOVE_UP
+
+
+label MORT
+
+r8 = r10
+r9 = 0
+r5 = 2
+label MORT_START
+comp r7 r8
+jumpz $DECREMENT
+label REPRISE
+r11 = r8+10000
+r3 = ram[r11]
+r8 = r8+1
+r11 = r8+10000
+r4 = ram[r11]
+r8 = r8+1
+call $DRAW
+r9 = r9 + 1
+wait
+wait
+comp r8 r10
+jumpe $FIN
+jump $MORT_START
+
+label FIN
+wait
+wait
+ram[42] = r9
+stop
+
+label DECREMENT
+r8 = 0
+jump $REPRISE
+
+
+label MOVE_RIGHT
+comp r6 1
+jumpe $MOVE_LEFT
+r6 = 0
+r8 = r8 + 1
+comp r8 48
+jumpz $START
+r8 = 0
+jump $START
+
+label MOVE_LEFT
+comp r6 0
+jumpe $MOVE_RIGHT
+r6 = 1
+r8 = r8 - 1
+comp r8 0
+jumpz $MOVE_LEFT1
+jump $START
+label MOVE_LEFT1
+r8 = 47
+jump $START
+
+label MOVE_DOWN
+comp r6 3
+jumpe $MOVE_UP
+r6 = 2
+r9 = r9 + 1
+comp r9 32
+jumpz $START
+r9 = 0
+jump $START
+
+label MOVE_UP
+comp r6 2
+jumpe $MOVE_DOWN
+r6 = 3
+r9 = r9 - 1
+comp r9 0
+jumpz $MOVE_UP1
+jump $START
+label MOVE_UP1
+r9 = 31
+jump $START
+
+
+//mettre x et y dans r3 et r4, le numero dans r5, utilise r0, r1 et r2 pour faire des trucs
+label DRAW
+r2 = $ALPHABET
+r0 = r5 * 2
+r2 = r2 + r0
+r0 = r3*128
+r1 = r4 * 4
+r0 = r0 + 1000
+r0 = r0 + r1
+r1 = rom2[r2]
+ram[r0] = r1
+r0 = r0 + 1
+r1 = rom1[r2]
+ram[r0] = r1
+r0 = r0 + 1
+r2 = r2 + 1
+r1 = rom2[r2]
+ram[r0] = r1
+r0 = r0 + 1
+r1 =rom1[r2]
+ram[r0] = r1
+return
+
+//mettre x et y dans r3 et r4,  utilise r0, r1 et r2 pour faire des trucs
+label ERASE
+r0 = r3*128
+r1 = r4 * 4
+r0 = r0 + 1000
+r0 = r0 + r1
+r1 = 0
+ram[r0] = r1
+r0 = r0 + 1
+ram[r0] = r1
+r0 = r0 + 1
+ram[r0] = r1
+r0 = r0 + 1
+ram[r0] = r1
+r0 = r0 + 1
+return
+
+//utilise r0 et r1 et pt r11, resultat dans r2, 1 si contact 0 sinon, arguments dans r3 et r4
+label CONTACT
+r5 = r7 + 10000
+r11 = 10000
+r2 = 1
+label CONTACT_START
+r0 = ram[r11]
+r11 = r11 + 1
+r1 = ram[r11]
+r11 = r11 + 1
+comp r0 r3
+jumpe $CONCTACT1
+jump $CONTACT_ENDLOOP
+label CONCTACT1
+comp r1 r4
+jumpe $CONTACT_END
+label CONTACT_ENDLOOP
+comp r11 r5
+jumpz $CONTACT_START
+
+
+r2 = 0
+label CONTACT_END
+return
+
+label ALPHABET
+
+include snake_char.rsc
+

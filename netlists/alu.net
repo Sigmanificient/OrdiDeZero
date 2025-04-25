@@ -1,0 +1,77 @@
+INPUT A:16 B:16 OP:3
+
+C0 = INDEX OP 0
+NB = NOT B
+NOTDOADD = OR OP[1] OP[2]
+DO_ADD = NOT NOTDOADD
+
+GHOST DO_ADD
+
+GOODB = MUX C0 B NB
+
+FOR i IN 0 TO 15:
+    S{i}_X  = XOR A[{i}] GOODB[{i}]
+    SU{i}    = XOR S{i}_X C{i}
+    C{i+1}_A = AND A[{i}] GOODB[{i}]
+    C{i+1}_B = AND S{i}_X C{i}
+    C{i+1}   = OR C{i+1}_A C{i+1}_B
+END
+
+#code = 000,001
+RESULT_SUM = CONCAT SU15 SU14 SU13 SU12 SU11 SU10 SU9 SU8 SU7 SU6 SU5 SU4 SU3 SU2 SU1 SU0
+
+GHOST_END
+
+#code = 010
+MUL_COND1 = NOT OP[0]
+MUL_COND2 = NOT OP[2]
+MUL_COND3 = INDEX OP 1
+MUL_COND4 = AND MUL_COND1 MUL_COND2
+MUL = AND MUL_COND4 MUL_COND3
+
+GHOST MUL
+
+FOR i IN 0 TO 15:
+    PART{i} = MUX B[{i}] ZERO A
+    IF i == 0:
+        SHIFTED{i} = BUF PART{i}
+    ELSE:
+        SHIFTED{i} = CONCAT PART{i} {i * '0'}
+    ENDIF
+    S{i} = SUB SHIFTED{i} 0 15
+END
+
+ACC0 = BUF S0
+C0_0 = CONST 0
+
+FOR i IN 0 TO 14:
+    FOR j IN 0 TO 15:
+        A_{i}_{j} = INDEX ACC{i} {j}
+        B_{i}_{j} = INDEX S{i+1} {j}
+        SX_{i}_{j} = XOR A_{i}_{j} B_{i}_{j}
+        S_{i}_{j}  = XOR SX_{i}_{j} C{i}_{j}
+        CA_{i}_{j} = AND A_{i}_{j} B_{i}_{j}
+        CB_{i}_{j} = AND SX_{i}_{j} C{i}_{j}
+        C{i}_{j+1} = OR CA_{i}_{j} CB_{i}_{j}
+    END
+    ACC{i+1} = CONCAT S_{i}_15 S_{i}_14 S_{i}_13 S_{i}_12 S_{i}_11 S_{i}_10 S_{i}_9 S_{i}_8 S_{i}_7 S_{i}_6 S_{i}_5 S_{i}_4 S_{i}_3 S_{i}_2 S_{i}_1 S_{i}_0
+END
+
+RESULT_MUL = BUF ACC15
+
+GHOST_END
+
+#code 100,101,110,111
+AND_RESULT = AND A B
+OR_RESULT = OR A B
+XOR_RESULT = XOR A B
+
+AND_OR_RESULT = MUX OP[0] AND_RESULT OR_RESULT
+XOR_CONST_RESULT = MUX OP[0] XOR_RESULT A
+EZ_RESULT = MUX OP[1] AND_OR_RESULT XOR_CONST_RESULT
+
+HARD_RESULT = MUX OP[1] RESULT_SUM RESULT_MUL
+
+RESULT = MUX OP[2] HARD_RESULT EZ_RESULT
+
+OUTPUT RESULT

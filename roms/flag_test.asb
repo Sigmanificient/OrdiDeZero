@@ -1,0 +1,8 @@
+label START
+r1 = 0
+r0 = r0 + 1
+r2 = $END
+ram[1] = r2
+comp r0 10
+jumpz $START
+label END
