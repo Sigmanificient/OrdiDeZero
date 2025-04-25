@@ -32,6 +32,8 @@ Cependant, si vous voulez compiler vous-même le projet :
 - Placez les includes dans un dossier `inc/` et les bibliothèques dans `lib/`.
 - Si vous êtes sous VSCode, le fichier `tasks.json` est déjà configuré pour compiler automatiquement.
 
+➡️ Une fois que le simulateur est compilé, il suffit d'exécuter **le fichier `interface.py`** pour pouvoir tout gérér !
+
 ---
 
 ## Suivez le projet !
