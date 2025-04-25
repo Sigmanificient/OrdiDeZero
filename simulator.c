@@ -472,7 +472,7 @@ int main(int argc, char** argv) {
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);
 
-        SDL_Delay(250); // Attend 5 secondes (5000 ms)
+        SDL_Delay(250);
 
         SDL_DestroyWindow(window);
         SDL_Quit();
