@@ -99,7 +99,7 @@ int gate_type_from_string(const char* str) {
 
 
 void afficher_instruction(const Instruction* inst) {
-    printf("ID %d : %s (%d <- %d %d %d)", inst->id, inst->type,
+    printf("ID %d : %d (%d <- %d %d %d)", inst->id, inst->type,
            inst->output, inst->input1, inst->input2, inst->input3);
     if (inst->has_const) {
         printf("  CONST = %d", inst->const_value);
